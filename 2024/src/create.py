@@ -10,10 +10,10 @@ for i in range(1, 26):
             "",
             "for i in input:",
             "    print(i)",
-			"",
-			"total = 0",
-			'print(f"Part 1 answer: {total}")',
-			'print(f"Part 2 answer: {total}")',]
+            "",
+            "total = 0",
+            'print(f"Part 1 answer: {total}")',
+            'print(f"Part 2 answer: {total}")',]
     filename = f"day{i}.py"
     with open(filename, 'w') as file:
         for line in code:
