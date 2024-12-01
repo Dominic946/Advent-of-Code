@@ -5,3 +5,7 @@ with open('../inputs/day25.txt', 'r') as file:
 
 for i in input:
     print(i)
+
+total = 0
+print(f"Part 1 answer: {total}")
+print(f"Part 2 answer: {total}")
