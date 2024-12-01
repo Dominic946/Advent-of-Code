@@ -22,4 +22,4 @@ similarity = 0
 for i in left_list:
     similarity += i * right_list.count(i)
 
-print(f"Part 1 answer: {similarity}")
+print(f"Part 2 answer: {similarity}")
