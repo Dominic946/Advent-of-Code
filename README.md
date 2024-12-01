@@ -15,7 +15,8 @@ My solutions for each year are in their respective folder.
 - To run any Python code (which is all of the 2023 and 2024 sultions) I have the files start with `#!/usr/bin/python3` so I can run them by simply typing `./day1.py` instead of doing `python3 day1.py`, it is a small optimization for when I was trying for speed. But recently I have been doing Advent of Code only for fun, not for speed.
 
 - To run Java code (which was my 2021 solutions), just run it I guess; I just clicked the run button in my IDE rather than using the terminal this year. And in fact, the input files for this 2021 code may need to be in the same directory as the src code, rather than in a separate `../inputs` directory.
-  
+
+
  ## Notes:
  Not all days have a working solution.
  - Some days were too hard for me to attempt at the time, and either don't have a code file for that day, or just have my default template file for that day
@@ -26,3 +27,5 @@ My solutions for each year are in their respective folder.
    - Some days have one main program that prints the answer for both parts.
    - For some days, I solved part 1 and then overwrote my part 1 code to with my part 2 code. On these days, the code will only give an answer for part 2, although it shouldn't be too hard to modify most of them back to give the part 1 answers again.
    - On other days, I did make 2 seperate files `main.cc` and `part2.cc`, where running main.cc gives the part 1 answer, and running part2.cc give the part 2 answer, for example.
+
+My python src directories (`2023/src` and `2024/src`) contain a file `create.py`, this is the script I wrote that I can run at the start of each year to easily create src files with my base template code for every day, and create an input file for every day.
