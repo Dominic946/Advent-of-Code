@@ -5,16 +5,17 @@ I started doing Advent of Code in 2021, and I plan to keep doing it every year.
 My solutions for each year are in their respective folder.
 
 ## To run:
-- You must have a directory titled `Inputs`, as well as a file within that directory titled `Day##.txt`, that includes the input data for day ##.
-  - For example, there must exist files `2022/Inputs/Day10.txt` if you wish to run the 2022 code for Day 1.
+- You must have a directory titled `inputs`, as well as a file within that directory titled `day##.txt`, that includes the input data for day ##.
+  - For example, there must exist file `2023/inputs/day10.txt` if you wish to run the 2023 code for Day 10.
   - I did not push the the input files to github, because [the creator of advent of code specifically asked](https://mobile.twitter.com/ericwastl/status/1465805354214830081) for people to not share their input data.
   
+- To run any Python code (which is all of the 2023 and 2024 sultions), run like a standard Python file, `python3 day1.py`
+   - Though I do also have the files start with `#!/usr/bin/python3` so I can run them by simply typing `./day1.py` instead of doing `python3 day1.py`, it is a small optimization for when I was trying for speed. But recently I have been doing Advent of Code only for fun, not for speed.
+
  - To run any C++ code (which is all of my 2022 solutions), just compile and run like any C++ program.
    - I like to do `g++ src/Day14/main.cc` to compile, and `./a.out` to run. Pretty basic stuff, but it works for me.
 
-- To run any Python code (which is all of the 2023 and 2024 sultions) I have the files start with `#!/usr/bin/python3` so I can run them by simply typing `./day1.py` instead of doing `python3 day1.py`, it is a small optimization for when I was trying for speed. But recently I have been doing Advent of Code only for fun, not for speed.
-
-- To run Java code (which was my 2021 solutions), just run it I guess; I just clicked the run button in my IDE rather than using the terminal this year. And in fact, the input files for this 2021 code may need to be in the same directory as the src code, rather than in a separate `../inputs` directory.
+- To run Java code (which was my 2021 solutions), I don't entirely remember how my 2021 solutions work because it was a long time ago and I didn't document my process at all back then. So just run it I guess; I probably just clicked the run button in my IDE. And in fact, the input files for this 2021 code may need to be in the same directory as the src code, rather than in a separate `../inputs` directory.
 
 
  ## Notes:
