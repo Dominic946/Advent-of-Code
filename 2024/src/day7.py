@@ -3,82 +3,61 @@ with open('../inputs/day7.txt', 'r') as file:
     input = file.readlines()
     input = [i.strip() for i in input]
 
-# --------------------------------------------------------------
-# lol this code is pretty messy and slow,
-# but it worked for me first try so I can't complain
-# I gotta go to sleep now but, maybe I'll clean this up tomorrow
-# to make it more efficient and readable
-# --------------------------------------------------------------
 
-part1 = 0
-for i in input:
-    ans, nums = i.split(':')
-    ans = int(ans)
-    nums = [int(n) for n in nums.split()]
-    
-    # Brute force testing all permutations of + and *, like +*++ and +*** etc.
-    num_ops = len(nums) - 1
-    ops = ['+'] * num_ops
-    for i in range(2**num_ops):
-        total = nums[0]
-        # For all the operations in this permutation, if it is + then add, else multiply
-        for n in range(1, len(nums)):
-            if ops[n-1] == '+':
+# Perfomrms the list of operations on the numbers.
+# Returns boolean, True if the result equals the answer
+def evaluate_equation(nums, ops, ans):
+    total = nums[0]
+    # Perform all the operations
+    for n in range(1, len(nums)):
+        match ops[n-1]:
+            case '+':
                 total += nums[n]
-            else:
+            case '*':
                 total *= nums[n]
-                
-        # All operations are complete, break if we got the right answer
-        if total == ans:
-            part1 += ans
-            break
-
-        # This code sets up the next permutation of operations if didn't get the right answer
-        # Initial ops is '++++', which becomes '*+++',
-        # then '+*++', then '**++' then '++*+', '*+*+', and so on.
-        for char in range(num_ops):
-            if ops[char] == '+':
-                ops[char] = '*'
-                break
-            else:
-                ops[char] = '+'
-
-print(f"Part 1 answer: {part1}")
-
-part2 = 0
-# Same exact code copied from part 1 solution, but I just added a new operation 'c'
-for i in input:
-    ans, nums = i.split(':')
-    ans = int(ans)
-    nums = [int(n) for n in nums.split()]
-    
-    num_ops = len(nums) - 1
-    ops = ['+'] * num_ops
-    for i in range(3**num_ops):
-        total = nums[0]
-        for n in range(1, len(nums)):
-            if ops[n-1] == '+':
-                total += nums[n]
-            elif ops[n-1] == '*':
-                total *= nums[n]
-            # if the operation is 'c', do string concatenation and convert back to int
-            elif ops[n-1] == 'c':
+            case 'c':
                 total = int(str(total) + str(nums[n]))
-                
-        if total == ans:
-            part2 += ans
+    # All operations are complete, return whether or not we got the right answer
+    return total == ans
+
+
+# This code sets up the next permutation of operations if didn't get the right answer
+# Initial ops is '++++', which becomes '*+++',
+# then '+*++', then '**++' then '++*+', '*+*+', and so on.
+# Takes in one set of operations and returns the next permutation in that series
+def next_permutation(ops, include_c = False):
+    for char in range(len(ops)):
+        if ops[char] == '+':
+            ops[char] = '*'
             break
+        elif include_c and ops[char] == '*':
+            ops[char] = 'c'
+            break
+        else:
+            ops[char] = '+'
+    return ops
 
-        # Very similar code to part 1 get the next permutation of operations, it just also
-        # adds in the new 'c' operation into the mix.
-        for char in range(num_ops):
-            if ops[char] == '+':
-                ops[char] = '*'
-                break
-            elif ops[char] == '*':
-                ops[char] = 'c'
-                break
-            else:
-                ops[char] = '+'
 
-print(f"Part 2 answer: {part2}")
+# Run the main code to parse input and brute force trying all permutations of operations on each line
+def run_code(include_c = False):
+    result = 0
+    for i in input:
+        ans, nums = i.split(':')
+        ans = int(ans)
+        nums = [int(n) for n in nums.split()]
+        
+        # Brute force testing all permutations of + and *, like *+++ and +*+* etc.
+        num_ops = len(nums) - 1
+        ops = ['+'] * num_ops
+        for i in range((2 + include_c) ** num_ops):
+            # Attempt the equations, break if we found a success
+            if evaluate_equation(nums, ops, ans):
+                result += ans
+                break
+
+            # Get the next permutation of operations if didn't get the right answer
+            ops = next_permutation(ops, include_c)
+    return result
+
+print(f"Part 1 answer: {run_code()}")
+print(f"Part 2 answer: {run_code(include_c = True)}")
