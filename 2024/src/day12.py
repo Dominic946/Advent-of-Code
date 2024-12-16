@@ -5,32 +5,43 @@ with open('../inputs/day12.txt', 'r') as file:
 
 height = len(input)
 width = len(input[0])
-dirs = [(0,1), (0,-1), (1,0), (-1,0)]
+# The 4 directions: up, down, left, right
+dirs = [(0,-1), (0,1), (-1,0), (1,0)]
+
+# A const dict like {dir: [left direction, up-left direction]}
+# Like suppose I am facing east, or in other words I am facing in the (0,1) dir.
+# Then if I turn to my left, I will be facing in the (-1, 0) direction. If I combine those to go forward and left, that is the (-1, 1) direction.
+# So this dict {dir: [left direction, up-left direction]} contains (0,1) : [(-1, 0), (-1, 1)] to represent that example.
 left_turn = {(1, 0): [(0,1), (1,1)], (-1, 0): [(0, -1), (-1, -1)], (0, 1): [(-1, 0), (-1, 1)], (0, -1): [(1, 0), (1, -1)]}
 
-seen = []
+seen = set()
+
+# A dict like {letter: [list of points]} aka {'A': [(0,0), (1,0)]} to show that their is a 'A' type field on tiles (0,0) and (1,0)
+# Though the fact that there can be multiple disjoin fields which are both type 'A' make it a bit more complecated.
+# So I also put an origin in the dict key, where the origin is just one point (which is the top most, left most point) that is in this field
+# So this dict is actually formatted {('A', (0,0)): [(0,0), (1,0)]}.
 fields = dict()
 
+# dfs alrogithm, like flood fill to find all tiles of the same plant type that are connected to build the fields dict
 def find_field(y, x, plant_type, origin):
-    seen.append((y,x))
-    if (plant_type, origin) not in fields:
-        fields[(plant_type, origin)] = []
-    fields[(plant_type, origin)].append((y,x))
+    seen.add((y,x))
+    if (origin) not in fields:
+        fields[(origin)] = []
+    fields[(origin)].append((y,x))
     for dy, dx in dirs:
         ny = y + dy
         nx = x + dx
         if ((ny, nx) not in seen) and (0 <= nx < width) and (0 <= ny < height) and (input[ny][nx] == plant_type):
             find_field(y+dy, x+dx, plant_type, origin)
 
-print('parse')
 for y, row in enumerate(input):
     for x, plant_type in enumerate(row):
         if (y, x) not in seen:
             find_field(y, x, plant_type, (y, x))
 
-print('calculate cost 1')
+
 total = 0
-for plant_type, field in fields.items():
+for field in fields.values():
     area = len(field)
     perimiter = 0
     for plant in field:
@@ -39,9 +50,9 @@ for plant_type, field in fields.items():
     
 print(f"Part 1 answer: {total}")
 
-print('calculate cost 2')
+
 total = 0
-for plant_type, field in fields.items():
+for field in fields.values():
     area = len(field)
     perimiter = 0
     for y, x in field:
